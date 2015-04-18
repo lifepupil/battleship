@@ -1,19 +1,62 @@
-#container {
-  border: 5px solid red;
-  width: 500px;
-  height: 500px
-  margin: 50px;
-  padding: 25px;
+body {
+  background-color: black;
 }
 
-#board {
+#banner {
+  border: 1px dashed black;
+  background-image: url("/assets/logo.png");
+  background-position: top;
+  // width: 100%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-color: black;
+}
+
+#container {
+  border: 1px dashed red;
+  width: 100%;
+  height: 100%;
+  color: white;
+  // margin-right: -150px;
+  // padding: 25px;
+}
+
+#boardShips {
   border: 5px solid green;
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
+
+  td {
+    background-image: url("/assets/ocean_anim.gif");
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #252525;
+    background-color: #cccccc;
+  }
+}
+
+#middlePanel {
+  
+}
+
+#boardAttacks {
+  border: 5px solid red;
+  width: 500px;
+  height: 500px;
+
+  td {
+    background-image: url("/assets/ocean_anim.gif");
+    background-size: cover;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #252525;
+    background-color: #cccccc;
+  }
 }
 
 #controls {
   border: 5px solid blue;
-  width: 200px;
-  height: 200px;
+  // width: 100%;
+  height: 100px;
 }
