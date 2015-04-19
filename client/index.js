@@ -52,15 +52,24 @@ function possiblePlace(start, size, direction_x, direction_y) {
 
 
 function shipPlacement(shipSize) {
+  // x and y labels
+  var x_label = 0;
+  var y_label = 1;
   // create array of possible placement directions from which to randomly select
-  var directions = [[1,1],[1,-1],[-1,1],[-1,-1]];
+  var directions = [[1,0],[-1,0],[0,1],[0,-1]];
   // get a starting point
   var startPos = getStartingPos();
 
   for (var i = 3; i>=0 ; i--) {
     var direction = Math.floor(Math.random()*i);
     var thisDirection = directions.splice(direction,1);
-    console.log('direction', thisDirection[0],thisDirection[1]);
+    var end_x = startPos.x + (shipSize * thisDirection[0][x_label]);
+    var end_y = startPos.y + (shipSize * thisDirection[0][y_label]);
+    // debugger;
+    // if (thisDirection[])
+    console.log('x,y',startPos.x, startPos.y);
+    console.log('direction', thisDirection[0][0], thisDirection[0][1]);
+    console.log('end x,y', end_x, end_y);
   }
     // var test = possiblePlace(startPos,shipSize,thisDirection[0],thisDirection[1]);
     // if (test[0]===true) {
