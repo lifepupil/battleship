@@ -29,8 +29,14 @@ function setFleet() {
 }
 
 
-function possiblePlace(startPos, direction_x, direction_y) {
+function possiblePlace(start, size, direction_x, direction_y) {
   // 1. determine the endPos
+  var end = {
+    x: start.x + ((size)*direction_x),
+    y: start.y + ((size)*direction_y)
+  };
+
+  console.log(start.x, start.y, end.x, end.y, size);
   // 2. if (startPos.x === endPosx) { loop through each y in between to see if occupied by another ship} else {loop through x}
 
 
@@ -41,9 +47,10 @@ function shipPlacement(shipSize) {
 
 // 1. get a starting point
   var startPos = getStartingPos();
+  possiblePlace(startPos,shipSize,1,1);
 // 2.
 
-  console.log('start',startPosition);
+  // console.log('start',startPos);
 //   var starting_x;
 //   var starting_y;
 //   var direction_x;
