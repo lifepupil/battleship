@@ -39,14 +39,17 @@ function possiblePlace(start, size, direction_x, direction_y) {
   var end_x = start.x + ((size)*direction_x);
   var end_y = start.y + ((size)*direction_y);
 
-  for (var x = start.x; x<end.x; x++) {
+
+  for (var x = start.x; x<end_x; x++) {
     var $td = $('#boardShips td[data-x="'+ x +'"][data-y="'+start.y+'"]');
 
+    $td.addClass('p1_ship');
+    console.log($td);
   }
 
 
   // if ( ) === endPosx) {
-  // 
+  //
   //   // loop through each y in between to see if occupied by another ship
   //
   // } else {
