@@ -19,8 +19,9 @@ function getStartingPos() {
 }
 
 function setFleet() {
-  var ships = [5,4,3,3,2];
-  for (var length = 0; length<5 ; length++) {
+  // var ships = [5,4,3,3,2];
+  var ships = [5];
+  for (var length = 0; length<ships.length ; length++) {
     // console.log('ships',ships[length]);
     shipPlacement(ships[length]);
 
@@ -36,6 +37,7 @@ function possiblePlace(start, size, direction_x, direction_y) {
   // };
 
   // console.log(start.x, start.y, end.x, end.y, size);
+
   var end_x = start.x + ((size)*direction_x);
   var end_y = start.y + ((size)*direction_y);
 
@@ -46,25 +48,24 @@ function possiblePlace(start, size, direction_x, direction_y) {
     $td.addClass('p1_ship');
     console.log($td);
   }
-
-
-  // if ( ) === endPosx) {
-  //
-  //   // loop through each y in between to see if occupied by another ship
-  //
-  // } else {
-  //   // loop through x
-  // }
-  // // return bool,
-
 }
 
 
 function shipPlacement(shipSize) {
-
-// 1. get a starting point
+  // create array of possible placement directions from which to randomly select
+  var directions = [[1,1],[1,-1],[-1,1],[-1,-1]];
+  // get a starting point
   var startPos = getStartingPos();
-  possiblePlace(startPos,shipSize,1,1);
+
+  for (var i = 3; i>=0 ; i--) {
+    var direction = Math.floor(Math.random()*i);
+    var thisDirection = directions.splice(direction,1);
+    console.log('direction', thisDirection[0],thisDirection[1]);
+  }
+    // var test = possiblePlace(startPos,shipSize,thisDirection[0],thisDirection[1]);
+    // if (test[0]===true) {
+    //
+    // }
 // 2.
 
   // console.log('start',startPos);
