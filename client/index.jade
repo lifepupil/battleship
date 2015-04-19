@@ -11,25 +11,32 @@ html
       table
         tr
           td
-            input#email(type='email', placeholder='email')
-            input#password(type='password', placeholder='password')
+            .control
+              input#email(type='email', placeholder='email')
+              button#create-user Create User
           td
-            button#create-user Create User
-            button#login-user Login User
+            .control
+              input#password(type='password', placeholder='password')
+              button#login-user Login User
           td
-            button#logout-user Logout User
-            button#start-user Start User
+            .control
+              button#logout-user Logout User
+              button#start-user Start User
     #boards
       table
         tr
-          td#boardShips
+          td#boardAttacks
+            h3 TARGET GRID
             table
               - for(var y = 0; y < 10; y++)
                 tr
                 - for(var x = 0; x < 10; x++)
                   td(data-x=x, data-y=y)
           td#middlePanel
-          td#boardAttacks
+            #radar
+            #panel
+          td#boardShips
+            H3 YOUR FLEET
             table
               - for(var y = 0; y < 10; y++)
                 tr
