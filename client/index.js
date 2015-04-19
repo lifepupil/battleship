@@ -5,10 +5,9 @@ var root;
 $(document).ready(init);
 
 function init(){
-  root = new Firebase('https://battleship-cdr.firebaseio.com/');
+  // root = new Firebase('https://battleship-cdr.firebaseio.com/');
   // shipPlacement(5);
   setFleet();
-  getStartingPos();
 }
 
 function getStartingPos() {
