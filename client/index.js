@@ -1,6 +1,6 @@
 'use strict';
 
-var root, character;
+var root, characters, myKey, myCharacter;
 
 $(document).ready(init);
 
@@ -8,11 +8,33 @@ function init(){
   root = new Firebase('https://battleship-cdr.firebaseio.com/');
   //
   $('#create-user').click(createUser);
-  // $('#login-user').click(loginUser);
-  // $('#logout-user').click(logoutUser);
+  $('#login-user').click(loginUser);
+  $('#logout-user').click(logoutUser);
   // $('#start-user').click(startUser);
 
   setFleet();
+}
+
+function logoutUser(){
+  root.unauth();
+  myKey = null;
+  $('#characters > tbody > tr.active').removeClass('active');
+}
+
+function loginUser(){
+  var email = $('#email').val();
+  var password = $('#password').val();
+
+  root.authWithPassword({
+    email    : email,
+    password : password
+  }, function(error){
+    if(error){
+      console.log('Error logging in:', error);
+    }else{
+      redrawCharacters();
+    }
+  });
 }
 
 function createUser(){
