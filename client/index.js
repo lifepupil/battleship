@@ -29,15 +29,30 @@ function setFleet() {
 
 
 function possiblePlace(start, size, direction_x, direction_y) {
-  // 1. determine the endPos
-  var end = {
-    x: start.x + ((size)*direction_x),
-    y: start.y + ((size)*direction_y)
-  };
+  // determine the endPos
+  // var end = {
+  //   x: start.x + ((size)*direction_x),
+  //   y: start.y + ((size)*direction_y)
+  // };
 
-  console.log(start.x, start.y, end.x, end.y, size);
-  // 2. if (startPos.x === endPosx) { loop through each y in between to see if occupied by another ship} else {loop through x}
+  // console.log(start.x, start.y, end.x, end.y, size);
+  var end_x = start.x + ((size)*direction_x);
+  var end_y = start.y + ((size)*direction_y);
 
+  for (var x = start.x; x<end.x; x++) {
+    var $td = $('#boardShips td[data-x="'+ x +'"][data-y="'+start.y+'"]');
+
+  }
+
+
+  // if ( ) === endPosx) {
+  // 
+  //   // loop through each y in between to see if occupied by another ship
+  //
+  // } else {
+  //   // loop through x
+  // }
+  // // return bool,
 
 }
 
