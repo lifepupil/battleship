@@ -1,24 +1,62 @@
 'use strict';
 
-var root, characters, myKey, myCharacter;
+var root, players, myKey, myPlayer;
 
 $(document).ready(init);
 
 function init(){
   root = new Firebase('https://battleship-cdr.firebaseio.com/');
-  //
+  players = root.child('players');
+
   $('#create-user').click(createUser);
   $('#login-user').click(loginUser);
   $('#logout-user').click(logoutUser);
-  // $('#start-user').click(startUser);
+  $('#placeShips').click(setFleet);
+  $('#startGame').click(startGame);
 
-  setFleet();
+  $('#create-player').click(createPlayer);
+  players.on('child_added', playerAdded);
+  // characters.on('child_changed', characterChanged);
+  // setFleet();
 }
 
-function logoutUser(){
-  root.unauth();
-  myKey = null;
-  $('#characters > tbody > tr.active').removeClass('active');
+
+function startGame() {
+  var shipPositions = $('.ship');
+  
+// PUT SHIP COORDINATES UP ON FIREBASE
+// SELECT WHICH PLAYER GOES FIRST
+}
+
+function logoutUser() {
+  // root.unauth();
+  // myKey = null;
+  // $('#characters > tbody > tr.active').removeClass('active');
+}
+
+function createPlayer(){
+  var handle = $('#handle').val();
+  var uid = root.getAuth().uid;
+
+  players.push({
+    handle: handle,
+    uid: uid
+  });
+  console.log('PLAYER created');
+
+}
+
+function playerAdded(snapshot){
+  var player = snapshot.val();
+  var myUid = root.getAuth() ? root.getAuth().uid : '';
+  var active = '';
+
+  if(myUid === player.uid) {
+    myKey = snapshot.key();
+    myPlayer = player;
+    active = 'active';
+  }
+  console.log('PLAYER ADDED');
 }
 
 function loginUser(){
@@ -32,7 +70,7 @@ function loginUser(){
     if(error){
       console.log('Error logging in:', error);
     }else{
-      redrawCharacters();
+      // redrawCharacters();
     }
   });
 }
@@ -51,6 +89,8 @@ function createUser(){
   });
 }
 
+
+// THESE FUNCTIONS PUT THE SHIPS ON THE BOARD
 function getStartingPos() {
   var startPosition = {
     x: Math.floor(Math.random() * 10),
@@ -60,6 +100,7 @@ function getStartingPos() {
 }
 
 function setFleet() {
+  $('.ship').removeClass('ship');
   var ships = [5,4,3,3,2];
   // var ships = [5,4];
   for (var length = 0; length<ships.length ; length++) {
@@ -167,7 +208,7 @@ function shipPlacement(shipSize) {
     }
   }
   if (!done) {
-    console.log(startPos);
+    // console.log(startPos);
     shipPlacement(shipSize);
   }
 }
