@@ -26,13 +26,11 @@ function init(){
 
 function getFleet(snapshot) {
   var coord = snapshot.val();
-  // var id = myKey
-  console.log(coord);
-  // if (otherKey) {
-  //   // var #boardAttacks =
-  //   var $td = $('#boardAttacks td[data-x="'+ coord.x +'"][data-y="'+coord.y+'"]');
-  //
-  // }
+  console.log(coord.player, otherKey);
+  if (coord.player !== myKey) {
+    var $td = $('#boardAttacks td[data-x="'+ coord.x +'"][data-y="'+coord.y+'"]');
+    $td.addClass('enemyShip');
+  }
 }
 
 function startGame(){
@@ -55,14 +53,18 @@ function areEnoughPlayers(snapshot) {
 }
 
 function setFleet() {
-  // var shipCoords = players.child(myKey);
+  // var shipCoords = root.child(myKey);
 
   var $shipPositions = $('.ship');
   for (var i = 0 ; i<$shipPositions.length ; i++) {
     var coord_x = $($shipPositions[i]).data('x');
     var coord_y = $($shipPositions[i]).data('y');
 
-    shipCoords.push({x: coord_x, y: coord_y});
+    shipCoords.push({
+      player: myKey,
+      x: coord_x,
+      y: coord_y
+    });
     // shipCoords.push(shipPositions[i]);
   }
   $('#setShips').hide();
