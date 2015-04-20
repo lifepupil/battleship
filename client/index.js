@@ -1,49 +1,93 @@
 'use strict';
 
-var root, players, myKey, myPlayer;
+var root, players, myKey, otherKey, myPlayer, shipCoords;
 
 $(document).ready(init);
 
 function init(){
   root = new Firebase('https://battleship-cdr.firebaseio.com/');
   players = root.child('players');
+  shipCoords = root.child('shipCoords');
 
   $('#create-user').click(createUser);
   $('#login-user').click(loginUser);
   $('#logout-user').click(logoutUser);
-  $('#placeShips').click(setFleet);
+  $('#createShips').click(createFleet);
+  $('#setShips').click(setFleet);
+
+  $('#startGame').hide();
   $('#startGame').click(startGame);
 
   $('#create-player').click(createPlayer);
   players.on('child_added', playerAdded);
-  // characters.on('child_changed', characterChanged);
-  // setFleet();
+  players.on('value', areEnoughPlayers);
+  shipCoords.on('child_added', getFleet);
 }
 
+function getFleet(snapshot) {
+  var coord = snapshot.val();
+  // var id = myKey
+  console.log(coord);
+  // if (otherKey) {
+  //   // var #boardAttacks =
+  //   var $td = $('#boardAttacks td[data-x="'+ coord.x +'"][data-y="'+coord.y+'"]');
+  //
+  // }
+}
 
-function startGame() {
-  var shipPositions = $('.ship');
-  
+function startGame(){
+
+}
+
+function areEnoughPlayers(snapshot) {
+  var playerCount = snapshot.val();
+  var playerArr = [];
+  for (var playerKey in playerCount) {
+    playerArr.push(playerKey);
+  }
+  if (playerArr.length === 2) {
+    if (myKey !== playerArr[0]) {
+      otherKey = playerArr[0];
+    }
+    // UNHIDE THE START BUTTON WHEN THERE ARE TWO PLAYERS
+    $('#startGame').show();
+  }
+}
+
+function setFleet() {
+  // var shipCoords = players.child(myKey);
+
+  var $shipPositions = $('.ship');
+  for (var i = 0 ; i<$shipPositions.length ; i++) {
+    var coord_x = $($shipPositions[i]).data('x');
+    var coord_y = $($shipPositions[i]).data('y');
+
+    shipCoords.push({x: coord_x, y: coord_y});
+    // shipCoords.push(shipPositions[i]);
+  }
+  $('#setShips').hide();
+  $('#createShips').hide();
+
 // PUT SHIP COORDINATES UP ON FIREBASE
 // SELECT WHICH PLAYER GOES FIRST
 }
 
+
+// THESE FUNCTIONS HANDLE USERS
 function logoutUser() {
-  // root.unauth();
-  // myKey = null;
+  root.unauth();
+  myKey = null;
   // $('#characters > tbody > tr.active').removeClass('active');
 }
 
 function createPlayer(){
   var handle = $('#handle').val();
   var uid = root.getAuth().uid;
-
   players.push({
     handle: handle,
     uid: uid
   });
-  console.log('PLAYER created');
-
+  $('#handle').val(handle);
 }
 
 function playerAdded(snapshot){
@@ -56,7 +100,7 @@ function playerAdded(snapshot){
     myPlayer = player;
     active = 'active';
   }
-  console.log('PLAYER ADDED');
+  // console.log('PLAYER ADDED');
 }
 
 function loginUser(){
@@ -69,10 +113,10 @@ function loginUser(){
   }, function(error){
     if(error){
       console.log('Error logging in:', error);
-    }else{
-      // redrawCharacters();
     }
   });
+  $('#email').val(email);
+  $('#password').val('');
 }
 
 function createUser(){
@@ -99,7 +143,7 @@ function getStartingPos() {
   return startPosition;
 }
 
-function setFleet() {
+function createFleet() {
   $('.ship').removeClass('ship');
   var ships = [5,4,3,3,2];
   // var ships = [5,4];
