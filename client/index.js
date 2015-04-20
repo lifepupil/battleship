@@ -1,6 +1,9 @@
 'use strict';
 
 var root, players, myKey, otherKey, myPlayer, shipCoords;
+var ocean = '/assets/ocean.wav';
+var $sound;
+
 
 $(document).ready(init);
 
@@ -22,6 +25,10 @@ function init(){
   players.on('child_added', playerAdded);
   players.on('value', areEnoughPlayers);
   shipCoords.on('child_added', getFleet);
+
+  $sound = $('#sound');
+  $sound.attr('src', ocean);
+  // $sound[0].play();
 }
 
 function getFleet(snapshot) {
